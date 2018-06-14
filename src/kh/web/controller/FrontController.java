@@ -1,16 +1,17 @@
 package kh.web.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import kh.web.dao.Members2DAO;
+import kh.web.dto.Members2DTO;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -35,7 +36,7 @@ public class FrontController extends HttpServlet {
 				String email = request.getParameter("email");
 
 				// ---------------- DB ���� ------------------------
-				Members2DTO dto = new MembersDTO(id, pw, name, email);
+				Members2DTO dto = new Members2DTO(id, pw, name, email);
 				int result = dao.insertMembers2(dto);
 				request.setAttribute("result", result);
 
