@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,24 +17,24 @@ public class FrontController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			//  ---------------- FrontEnd ¿¬°á  --------------------------
+			//  ---------------- FrontEnd ï¿½ï¿½ï¿½ï¿½  --------------------------
 			String requestURI = request.getRequestURI();
 			String contextPath = request.getContextPath();
 			String command = requestURI.substring(contextPath.length());
-			//  ---------------- FrontEnd ¿¬°á  ³¡ ------------------------
+			//  ---------------- FrontEnd ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ ------------------------
 
 			Members2DAO dao = new Members2DAO();
 			boolean isRedirect = true;
 			String dst = "null";
 			
 			if(command.equals("/signup.do")) {
-				// ------------- FrontEnd ¿¡¼­ º¸³»ÁÖ´Â °ª ¹Þ±â ----------
+				// ------------- FrontEnd ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½Þ±ï¿½ ----------
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
 				
-				// ---------------- DB ¿¬°á ------------------------
+				// ---------------- DB ï¿½ï¿½ï¿½ï¿½ ------------------------
 				Members2DTO dto = new MembersDTO(id, pw, name, email);
 				int result = dao.insertMembers2(dto);
 				request.setAttribute("result", result);
@@ -59,6 +60,12 @@ public class FrontController extends HttpServlet {
 				isRedirect = false;
 				dst = "login.jsp";
 				
+			else if(command.equals("idcheck.do")) {
+				String id = request.getParameter("id");
+				boolean result = dao.idCheck(id);
+				request.setAttribute("result", result);
+				isRedirect = false;
+				dst = "signup.jsp";
 			}
 			
 			if(isRedirect) {
