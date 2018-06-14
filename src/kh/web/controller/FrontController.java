@@ -1,11 +1,14 @@
 package kh.web.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -26,8 +29,11 @@ public class FrontController extends HttpServlet {
 			if(command.equals("signup.do")) {
 				
 			}
-			else if() {
-				
+			else if(command.equals("idcheck.do")) {
+				String id = request.getParameter("id");
+				boolean result = dao.idCheck(id);
+				new Gson().toJson(result,response.getWriter());
+				isRedirect = false;
 			}
 		}
 		catch (Exception e) {e.printStackTrace();}
