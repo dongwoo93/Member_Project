@@ -32,7 +32,7 @@ public class FrontController extends HttpServlet {
 			else if(command.equals("idcheck.do")) {
 				String id = request.getParameter("id");
 				boolean result = dao.idCheck(id);
-				new Gson().toJson(result,response.getWriter());
+				request.setAttribute("result", result);
 				isRedirect = false;
 			}
 		}
