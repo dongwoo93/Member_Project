@@ -32,6 +32,7 @@ public class FrontController extends HttpServlet {
 				boolean result = dao.idCheck(id);
 				request.setAttribute("result", result);
 				isRedirect = false;
+				dst = "signup.jsp";
 			}
 		}
 		catch (Exception e) {e.printStackTrace();}
