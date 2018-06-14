@@ -12,12 +12,15 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
+<script>
+console.log("들어왔다");
+console.log(${sessionScope.loginid});
+</script>
 	<c:choose>
-		<c:when test="${session.loginid != null}">
-
+		<c:when test="${sessionScope.loginid != null}">
 			<table border="1">
 				<tr>
-					<th colspan="5">"${session.loginid}님 환영합니다."</th>
+					<th colspan="5">"${sessionScope.loginid}님 환영합니다."</th>
 				</tr>
 				<tr>
 					<td><button id="logout">로그아웃</button></td>

@@ -17,15 +17,15 @@
 		$("#check").keyup(function() {
 			var val = $("#check").val();
 			$.ajax({
-
 				url : "idcheck.do",
 				type : "get",
 				data : {id : val},
 				success : function(response) {
-					$("#response").text(response);
+					console.log(response);
+					$("#response").val(response);
 				},
-				error : function() {
-					console.log("에러 발생함");
+				error : function(response) {
+					console.log(response);
 				}
 
 			})
@@ -49,7 +49,9 @@
 					id="check"></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="text-align: center;" id="response"></td>
+				<td colspan="2" style="text-align: center;">
+				<input type="text" id="response">
+				</td>
 			</tr>
 			<tr>
 				<th>PW</th>

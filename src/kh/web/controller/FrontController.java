@@ -29,28 +29,40 @@ public class FrontController extends HttpServlet {
 			String dst = "null";
 
 			if(command.equals("/signup.do")) {
+				System.out.println("µé¾î¿ÔÀ½");
 				// ------------- FrontEnd ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½Þ±ï¿½ ----------
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
+				System.out.println(id + pw + name + email);
+		
 
 				// ---------------- DB ï¿½ï¿½ï¿½ï¿½ ------------------------
 				Members2DTO dto = new Members2DTO(id, pw, name, email);
+				System.out.println(dto.getId());
 				int result = dao.insertMembers2(dto);
+				System.out.println(result);
 				request.setAttribute("result", result);
 
 				isRedirect = false;
-				dst = "signup.jsp ";
+				dst = "signupview.jsp";
 			}
-			else if(command.equals("idcheck.do")) {
+			else if(command.equals("/idcheck.do")) {
 				String id = request.getParameter("id");
+				System.out.println("¾ÆÀÌµð : " + id);
 				boolean result = dao.idCheck(id);
+				System.out.println(result);
 				if(result) {
-					response.getWriter().print("ÀÌ¹Ì »ç¿ë ÁßÀÎ id°¡ Á¸Àç ÇÕ´Ï´Ù.");
+					System.out.println("if" + result);
+					response.getWriter().println("ÀÌ¹Ì »ç¿ë ÁßÀÎ id°¡ Á¸Àç ÇÕ´Ï´Ù.");
+					
 				}else {
-					response.getWriter().print("»ç¿ë °¡´ÉÇÑ id ÀÔ´Ï´Ù.");
+					System.out.println("else" + result);
+					response.getWriter().println("»ç¿ë °¡´ÉÇÑ id ÀÔ´Ï´Ù.");
+					
 				}
+				return;
 			}
 			else if(command.equals("/login.do")) {
 				String id = request.getParameter("id");
@@ -59,10 +71,12 @@ public class FrontController extends HttpServlet {
 				boolean result = dao.login(id, pw);
 
 				if(result) {
+					System.out.println("true µé¾î¿È");
 					HttpSession session = request.getSession();
 					session.setAttribute("loginid", id);
+					System.out.println(session.getAttribute("loginid"));
 				}
-				request.setAttribute("result", result);
+				
 
 				isRedirect = false;
 				dst = "login.jsp";

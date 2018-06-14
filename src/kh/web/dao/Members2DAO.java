@@ -12,8 +12,8 @@ import kh.web.dbutils.DBUtils;
 
 public class Members2DAO {
 	public boolean idCheck(String id) throws Exception{
+		System.out.println(id);
 		boolean b = false;
-		
 		Connection con = DBUtils.getConnection();
 		String sql = "select * from MEMBERS2 where ID=?";
 		
@@ -23,12 +23,13 @@ public class Members2DAO {
 		
 		ResultSet rs = pstat.executeQuery();
 		
-		while(rs.next()) {
-			if(rs.getString(1).equals(id)) {
-				b=true;
-			}
+		if(rs.next()) {
+			b = true;
 		}
 		
+		rs.close();
+		con.close();
+		pstat.close();
 		return b;
 	}
 	
@@ -37,7 +38,7 @@ public class Members2DAO {
 		
 		Connection con = DBUtils.getConnection();
 		
-		String sql = "select * from MEMBERS2 where ID=?,PW=?";
+		String sql = "select * from MEMBERS2 where ID=? and PW=?";
 		
 		PreparedStatement pstat = con.prepareStatement(sql);
 		
@@ -46,10 +47,8 @@ public class Members2DAO {
 		
 		ResultSet rs = pstat.executeQuery();
 		
-		while(rs.next()) {
-			if(rs.getString(1).equals(id) && rs.getString(2).equals(pw)) {
-				b = true;
-			}
+		if(rs.next()) {
+			b = true;
 		}
 		
 		return b;

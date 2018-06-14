@@ -4,8 +4,8 @@ import java.sql.Connection;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
 
 public class DBUtils {
 	public static Connection getConnection() throws Exception{
