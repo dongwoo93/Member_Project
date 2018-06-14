@@ -26,40 +26,22 @@ public class FrontController extends HttpServlet {
 			Members2DAO dao = new Members2DAO();
 			boolean isRedirect = true;
 			String dst = "null";
-			
+
 			if(command.equals("/signup.do")) {
 				// ------------- FrontEnd ���� �����ִ� �� �ޱ� ----------
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
-				
+
 				// ---------------- DB ���� ------------------------
 				Members2DTO dto = new MembersDTO(id, pw, name, email);
 				int result = dao.insertMembers2(dto);
 				request.setAttribute("result", result);
-				
+
 				isRedirect = false;
 				dst = "signup.jsp ";
 			}
-			else if(command.equals("/idcheck.do")) {
-
-			}
-			else if(command.equals("/login.do")) {
-				String id = request.getParameter("id");
-				String pw = request.getParameter("pw");
-				
-				boolean result = dao.login(id, pw);
-				
-				if(result) {
-				HttpSession session = request.getSession();
-				session.setAttribute("loginid", id);
-				}
-				request.setAttribute("result", result);
-				
-				isRedirect = false;
-				dst = "login.jsp";
-				
 			else if(command.equals("idcheck.do")) {
 				String id = request.getParameter("id");
 				boolean result = dao.idCheck(id);
@@ -67,7 +49,23 @@ public class FrontController extends HttpServlet {
 				isRedirect = false;
 				dst = "signup.jsp";
 			}
-			
+			else if(command.equals("/login.do")) {
+				String id = request.getParameter("id");
+				String pw = request.getParameter("pw");
+
+				boolean result = dao.login(id, pw);
+
+				if(result) {
+					HttpSession session = request.getSession();
+					session.setAttribute("loginid", id);
+				}
+				request.setAttribute("result", result);
+
+				isRedirect = false;
+				dst = "login.jsp";
+			}
+
+
 			if(isRedirect) {
 				response.sendRedirect(dst);
 			}
@@ -75,9 +73,9 @@ public class FrontController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			}
-			
-		}
-		catch (Exception e) {e.printStackTrace();}
+
+
+		}catch (Exception e) {e.printStackTrace();}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
