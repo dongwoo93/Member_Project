@@ -46,9 +46,11 @@ public class FrontController extends HttpServlet {
 			else if(command.equals("idcheck.do")) {
 				String id = request.getParameter("id");
 				boolean result = dao.idCheck(id);
-				request.setAttribute("result", result);
-				isRedirect = false;
-				dst = "signup.jsp";
+				if(result) {
+					response.getWriter().print("이미 사용 중인 id가 존재 합니다.");
+				}else {
+					response.getWriter().print("사용 가능한 id 입니다.");
+				}
 			}
 			else if(command.equals("/login.do")) {
 				String id = request.getParameter("id");
